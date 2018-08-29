@@ -8,9 +8,9 @@ import {ProductRepository} from '../model/product.repository';
   moduleId: 'module.id'
 } )
 export class StoreComponent {
-  public selectedCategory = null;
-  public productsPerPage = 4;
-  public selectedPage = 1;
+  public selectedCategory = null;       /*Выбранная катенория*/
+  public productsPerPage = 4;           /*Кол-во отображанмых строк на странице*/
+  public selectedPage = 1;              /*Номер выьранной страницы*/
   constructor ( private repository: ProductRepository ) {
   }
 
@@ -33,9 +33,13 @@ export class StoreComponent {
     this.productsPerPage = Number(newSize);
     this.changePage(1);
   }
-  get pageNumbers(): number[] {
+  get pageCount(): number {
+    return Math.ceil(this.repository
+      .getProducts(this.selectedCategory).length / this.productsPerPage)
+  }
+  /*get pageNumbers(): number[] {
     return Array(Math.ceil(this.repository
       .getProducts(this.selectedCategory).length / this.productsPerPage))
       .fill(0).map((x, i) => i + 1);
-  }
+  }*/
 }
